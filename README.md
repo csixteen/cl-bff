@@ -22,6 +22,7 @@ CL-USER(3):
 
 # TODO
 
+- Implement the "read" operator (`,`).
 - Read contents from file and feed the contents to `(run (sanitize contents))`.
 - Read memory size from argv.
 - Build a single binary.
