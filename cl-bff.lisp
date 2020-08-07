@@ -24,7 +24,11 @@
 (defun op-loop-start () 'LOOP-START)
 
 
-(defun op-loop-end () 'LOOP-END)
+(defun op-loop-end (code mem stack cursor pc)
+  (cond ((zerop (aref mem cursor))
+         (values mem (cdr stack) (1+ pc)))
+        (t (let ((offset (1+ (- (car stack) pc))))
+             (values mem stack cursor (+ pc offset))))))
 
 
 (defun op-decrement (code mem stack cursor pc)
