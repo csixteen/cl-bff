@@ -1,4 +1,4 @@
-(defconstant *default-memory-size* 30000)
+(defconstant *default-memory-size* 300)
 
 ;;;; ----------------------------------------------
 ;;;; Brainfuck Operators
@@ -14,11 +14,11 @@
 
 
 (defun op-shl (code mem stack cursor pc)
-  (values mem stack (1- cursor) pc))
+  (values mem stack (1- cursor) (1+ pc)))
 
 
 (defun op-shr (code mem stack cursor pc)
-  (values mem stack (1+ cursor) pc))
+  (values mem stack (1+ cursor) (1+ pc)))
 
 
 (defun op-loop-start (code mem stack cursor pc)
@@ -45,15 +45,15 @@
 
 
 (defun op-decrement (code mem stack cursor pc)
-  (prog
+  (progn
     (setf (aref mem cursor) (1- (aref mem cursor)))
-    (values mem stack cursor pc)))
+    (values mem stack cursor (1+ pc))))
 
 
 (defun op-increment (code mem stack cursor pc)
-  (prog
+  (progn
     (setf (aref mem cursor) (1+ (aref mem cursor)))
-    (values mem stack cursor pc)))
+    (values mem stack cursor (1+ pc))))
 
 
 (defun op-read () 'READ)
@@ -61,8 +61,8 @@
 
 (defun op-write (code mem stack cursor pc)
   (progn
-    (format t "~A" (int-char (aref mem cursor)))
-    (values mem stack cursor pc)))
+    (format t "~A" (code-char (aref mem cursor)))
+    (values mem stack cursor (1+ pc))))
 
 
 ;;;; ----------------------------------------------
@@ -109,10 +109,17 @@
   memory, cursor as the memory cursor and pc as the
   program counter. It will stop when the program counter
   has reached the end of the code."
-  (unless (>= pc (length code))
-    (multiple-value-bind (m s c p)
-      (execute-next-instruction code mem stack cursor pc)
-      (execute-program code m s c p))))
+  (let ((m mem)
+        (s stack)
+        (c cursor)
+        (p pc))
+    (loop (when (>= p (length code)) (return))
+          (multiple-value-bind (next-m next-s next-c next-p)
+            (execute-next-instruction code m s c p)
+            (psetq m next-m
+                   s next-s
+                   c next-c
+                   p next-p)))))
 
 
 ;;; ---------------------------------------------------------
