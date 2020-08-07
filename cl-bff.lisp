@@ -21,12 +21,25 @@
   (values mem stack (1+ cursor) pc))
 
 
-(defun op-loop-start () 'LOOP-START)
+(defun op-loop-start (code mem stack cursor pc)
+  (cond ((> (aref mem cursor) 0)
+         (values mem (cons pc stack) cursor (1+ pc)))
+        (t (let ((i (1+ pc))
+                 (skipped 0))
+             (loop (when (>= i (length code))
+                     (return (values mem stack cursor i)))
+                   (case (aref code i)
+                     (#\[ (psetq skipped (1+ skipped)))
+                     (#\] (cond ((zerop skipped)
+                                 (psetq i (1+ i))
+                                 (return (values mem stack cursor i)))
+                                (t (psetq skipped (1- skipped))))))
+                   (psetq i (1+ i)))))))
 
 
 (defun op-loop-end (code mem stack cursor pc)
   (cond ((zerop (aref mem cursor))
-         (values mem (cdr stack) (1+ pc)))
+         (values mem (cdr stack) cursor (1+ pc)))
         (t (let ((offset (1+ (- (car stack) pc))))
              (values mem stack cursor (+ pc offset))))))
 
