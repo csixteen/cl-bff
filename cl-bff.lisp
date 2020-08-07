@@ -58,21 +58,18 @@
 (defun action-op (c)
   "Gets the action for the operator represented by the character
   `c`, should there exist one."
-
   (get (char-to-symbol c) 'operators))
 
 
 (defun is-valid-operator (c)
   "Indicates whether char `c` represents a valid Brainfuck operator
   or not."
-
   (not (null (action-op (char-to-symbol c)))))
 
 
 (defun sanitize (code)
   "Takes Brainfuck code and removes any character that is not
   a valid operator."
-
   (remove-if-not 
     #'(lambda (c) (not (is-valid-operator c)))
     code))
@@ -84,7 +81,6 @@
 (defun execute-next-instruction (code mem cursor pc)
   "Executes the next instruction in the code indexed by
   the program counter."
-
   (let ((c (aref code pc)))
     (funcall (action-op c) code mem cursor pc)))
 
@@ -94,7 +90,6 @@
   memory, cursor as the memory cursor and pc as the
   program counter. It will stop when the program counter
   has reached the end of the code."
-
   (unless (>= pc (length code))
     (multiple-value-bind (m c p)
       (execute-next-instruction code mem cursor pc)
