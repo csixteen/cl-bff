@@ -14,14 +14,19 @@
 
 
 (defun op-shl (code mem stack cursor pc)
+  "Shifts the memory cursor one position to the left."
   (values mem stack (1- cursor) (1+ pc)))
 
 
 (defun op-shr (code mem stack cursor pc)
+  "Shifts the memory cursor one position to the right."
   (values mem stack (1+ cursor) (1+ pc)))
 
 
 (defun op-loop-start (code mem stack cursor pc)
+  "Advances the program counter to the next instruction if the
+  value of the current memory cell is greater than zero. If not,
+  it advances the program counter to the matching `]`."
   (cond ((> (aref mem cursor) 0)
          (values mem (cons pc stack) cursor (1+ pc)))
         (t (let ((i (1+ pc))
@@ -38,6 +43,9 @@
 
 
 (defun op-loop-end (code mem stack cursor pc)
+  "Advances the program counter to the next instruction if
+  the value of the current memory cell is zero. If not, it
+  moves the program counter back to the matching `[`."
   (cond ((zerop (aref mem cursor))
          (values mem (cdr stack) cursor (1+ pc)))
         (t (let ((offset (1+ (- (car stack) pc))))
@@ -45,12 +53,14 @@
 
 
 (defun op-decrement (code mem stack cursor pc)
+  "Decrements the value of the current memory cell by 1."
   (progn
     (setf (aref mem cursor) (1- (aref mem cursor)))
     (values mem stack cursor (1+ pc))))
 
 
 (defun op-increment (code mem stack cursor pc)
+  "Increments the value of the current memory cell by 1."
   (progn
     (setf (aref mem cursor) (1+ (aref mem cursor)))
     (values mem stack cursor (1+ pc))))
@@ -60,6 +70,8 @@
 
 
 (defun op-write (code mem stack cursor pc)
+  "Writes to STDOUT the ASCII character corresponding to the 
+  integer in the current memory cell."
   (progn
     (format t "~A" (code-char (aref mem cursor)))
     (values mem stack cursor (1+ pc))))
