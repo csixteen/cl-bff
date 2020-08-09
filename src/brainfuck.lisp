@@ -18,7 +18,7 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
-(in-package :cl-bff)
+;(in-package :cl-bff)
 
 ;;;; ----------------------------------------------
 ;;;; Brainfuck Operators
@@ -122,9 +122,7 @@
 (defun sanitize (code)
   "Takes Brainfuck code and removes any character that is not
   a valid operator."
-  (remove-if-not 
-    #'(lambda (c) (not (is-valid-operator c)))
-    code))
+  (remove-if-not #'is-valid-operator code))
 
 
 ;;;; ------------------------------------------------------
