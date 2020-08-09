@@ -37,7 +37,6 @@
 --mem-size <number>  The number of memory cells available during runtime.~%")
     (when quit
       (sb-ext:quit))))
-      
 
 
 (defun read-numeric-argument (arg)
