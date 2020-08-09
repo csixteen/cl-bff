@@ -51,7 +51,7 @@
          (filename (get-arg "file-name" params))
          (mem-size (or (get-arg "mem-size" params) *defaule-memory-size*)))
     (if (null filename)
-      (print-help)
+      (cl-bff:print-help)
       (run-code (read-code-from-file filename) mem-size))))
 
 
