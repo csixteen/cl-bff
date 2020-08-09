@@ -1,4 +1,4 @@
-(in-package :bff)
+(in-package :cl-bff)
 
 ;;;; ----------------------------------------------
 ;;;; Brainfuck Operators

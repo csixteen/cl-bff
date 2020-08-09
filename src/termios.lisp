@@ -1,4 +1,4 @@
-(in-package :bff)
+(in-package :cl-bff)
 
 (define-alien-type nil
   (struct termios

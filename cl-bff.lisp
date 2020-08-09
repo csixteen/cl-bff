@@ -1,5 +1,5 @@
 (require :asdf)
-(require :bff)
+(require :cl-bff)
 
 (defconstant *default-memory-size* 300)
 
@@ -15,14 +15,18 @@
       0
       0)))
 
+(defun print-help (&optional (s *error-output*))
+  (format s "~%Usage: ~S [[--help] | [--mem-size <int>]]~%"
+          (car sb-ext:*posix-argv*)))
+
 (defun parse-arguments (args)
   (cond ((null args) nil)
         ((string-equal (car args) "--mem-size")
          (cadr args)) ; Check for parsable integer
         ((string-equal (car args) "--help")
-         (print-help)
+         (print-help *standard-output*)
          (sb-ext:quit))
         (t (format *error-output* "ERROR: unknown option ~S~%" (car args))
-           (format *error-output* "~%Usage: ~S [[--help] | [--mem-size <int>]]~%"
-                   (car sb-ext:*posix-argv*))
+           (print-help)
            (sb-ext:quit))))
+
