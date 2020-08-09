@@ -21,28 +21,45 @@
 (require :asdf)
 (require :cl-bff)
 
+
 (defconstant *default-memory-size* 300)
 
-(defun run-code (code &key (mem-size *default-memory-size*))
+
+(defun run-code (code mem-size)
   "Takes a sequence that represents potential Brainfuck code and
   runs it."
-  (let* ((sane-code (sanitize code))
+  (let* ((sane-code (cl-bff:sanitize code))
          (len (length sane-code)))
-    (execute-program
+    (cl-bff:execute-program
       (make-array len :initial-contents sane-code)
       (make-array mem-size :initial-element 0)
       nil
       0
       0)))
 
+
 (defun print-help (&optional (s *error-output*))
-  (format s "~%Usage: ~S [[--help] | [--mem-size <int>]]~%"
+  (format s "~%Usage: ~S [[--help] | [--mem-size <number>]]~%"
           (car sb-ext:*posix-argv*)))
+
+
+(defun read-numeric-argument (arg)
+  "Tries to parse a string into an integer. I'm not interested
+  in allowing junk in the string, which is why I'm defining
+  this method to return nil instead of crashing with junk."
+  (cond ((null (find-if-not #'digit-char-p arg))
+         (parse-integer arg))
+        (t nil)))
+
 
 (defun parse-arguments (args)
   (cond ((null args) nil)
         ((string-equal (car args) "--mem-size")
-         (cadr args)) ; Check for parsable integer
+         (let ((mem-size (read-numeric-argument (cadr args))))
+           (cond ((null mem-size)
+                  (print-help)
+                  (sb-ext:quit))
+                 (t mem-size))))
         ((string-equal (car args) "--help")
          (print-help *standard-output*)
          (sb-ext:quit))
@@ -50,3 +67,17 @@
            (print-help)
            (sb-ext:quit))))
 
+(defun main()
+  (let ((mem-size (or (parse-arguments (cdr sb-ext:*posix-argv*))
+                      *default-memory-size*)))
+    (format t "Memory size: ~A~%" mem-size)))
+
+
+;;;; ------------------------------------------------
+
+
+(save-lisp-and-die
+  "bin/cl-bff"
+  :purify t
+  :executable t
+  :toplevel #'main)
