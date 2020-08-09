@@ -40,6 +40,6 @@ $
 - Test with more complex Brainfuck code.
 - Write unit tests.
 
-#LICENSE
+# LICENSE
 
-MIT. See [LICENSE](https://github.com/csixteen/cl-bff/blob/master/LICENSE).
+See [LICENSE](https://github.com/csixteen/cl-bff/blob/master/LICENSE).
