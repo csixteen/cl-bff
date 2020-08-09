@@ -2,4 +2,6 @@
   (:use :cl
         #+sbcl :sb-alien)
   (:export :execute-program
-           :sanitize))
+           :sanitize
+           :parse-arguments
+           :print-help))

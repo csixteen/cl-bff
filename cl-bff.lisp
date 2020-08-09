@@ -25,6 +25,10 @@
 (defconstant *default-memory-size* 300)
 
 
+(defun read-code-from-file (filename)
+  filename)
+
+
 (defun run-code (code mem-size)
   "Takes a sequence that represents potential Brainfuck code and
   runs it."
@@ -38,40 +42,17 @@
       0)))
 
 
-(defun print-help (&key (s *error-output*) (quit t))
-  (progn
-    (format s "~%Usage: ~S [[--help] | [--mem-size <number>]]~%"
-            (car sb-ext:*posix-argv*))
-    (when quit
-      (sb-ext:quit))))
+(defun get-arg (argname args)
+  (cadr (find argname args :test #'string-equal :key #'car)))
 
-
-(defun read-numeric-argument (arg)
-  "Tries to parse a string into an integer. I'm not interested
-  in allowing junk in the string, which is why I'm defining
-  this method to return nil instead of crashing with junk."
-  (cond ((null (find-if-not #'digit-char-p arg))
-         (parse-integer arg))
-        (t nil)))
-
-
-(defun parse-arguments (args)
-  (cond ((or (null args) (string-equal (car args) "-h"))
-         (print-help))
-        ((string-equal (car args) "--mem-size")
-         (let ((mem-size (read-numeric-argument (cadr args))))
-           (cond ((null mem-size)
-                  (print-help))
-                 (t mem-size))))
-        ((string-equal (car args) "--help")
-         (print-help :s *standard-output*))
-        (t (format *error-output* "ERROR: unknown option ~S~%" (car args))
-           (print-help))))
 
 (defun main()
-  (let ((mem-size (or (parse-arguments (cdr sb-ext:*posix-argv*))
-                      *default-memory-size*)))
-    (format t "Memory size: ~A~%" mem-size)))
+  (let* ((params (cl-bff:parse-arguments (cdr sb-ext:*posix-argv*)))
+         (filename (get-arg "file-name" params))
+         (mem-size (or (get-arg "mem-size" params) *defaule-memory-size*)))
+    (if (null filename)
+      (print-help)
+      (run-code (read-code-from-file filename) mem-size))))
 
 
 ;;;; ------------------------------------------------

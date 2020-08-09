@@ -17,4 +17,5 @@
                 :depends-on ("package")
                 :serial t
                 :components ((:file "termios")
+                             (:file "argparser")
                              (:file "brainfuck")))))
