@@ -39,3 +39,7 @@ $
 - Read Brainfuck source code from file..
 - Test with more complex Brainfuck code.
 - Write unit tests.
+
+#LICENSE
+
+MIT. See [LICENSE](https://github.com/csixteen/cl-bff/blob/master/LICENSE).

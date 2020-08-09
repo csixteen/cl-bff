@@ -38,9 +38,12 @@
       0)))
 
 
-(defun print-help (&optional (s *error-output*))
-  (format s "~%Usage: ~S [[--help] | [--mem-size <number>]]~%"
-          (car sb-ext:*posix-argv*)))
+(defun print-help (&key (s *error-output*) (quit t))
+  (progn
+    (format s "~%Usage: ~S [[--help] | [--mem-size <number>]]~%"
+            (car sb-ext:*posix-argv*))
+    (when quit
+      (sb-ext:quit))))
 
 
 (defun read-numeric-argument (arg)
@@ -53,19 +56,17 @@
 
 
 (defun parse-arguments (args)
-  (cond ((null args) nil)
+  (cond ((or (null args) (string-equal (car args) "-h"))
+         (print-help))
         ((string-equal (car args) "--mem-size")
          (let ((mem-size (read-numeric-argument (cadr args))))
            (cond ((null mem-size)
-                  (print-help)
-                  (sb-ext:quit))
+                  (print-help))
                  (t mem-size))))
         ((string-equal (car args) "--help")
-         (print-help *standard-output*)
-         (sb-ext:quit))
+         (print-help :s *standard-output*))
         (t (format *error-output* "ERROR: unknown option ~S~%" (car args))
-           (print-help)
-           (sb-ext:quit))))
+           (print-help))))
 
 (defun main()
   (let ((mem-size (or (parse-arguments (cdr sb-ext:*posix-argv*))
