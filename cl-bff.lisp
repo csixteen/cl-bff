@@ -1,3 +1,31 @@
+;;;; FFI to access termios
+
+#+sbcl
+(define-alien-type nil
+  (struct termios
+          (c_iflag unsigned-int)
+          (c_oflag unsigned-int)
+          (c_cflag unsigned-int)
+          (c_lflag unsigned-int)
+          (c_cc (array unsigned-char 20))
+          (c_ispeed int)
+          (c_ospeed int)))
+
+(declaim (inline tcgetattr))
+(define-alien-routine "tcgetattr" int
+                      (fd int)
+                      (term (* (struct termios))))
+
+(declaim (inline tcsetattr))
+(define-alien-routine "tcsetattr" int
+                      (fd int)
+                      (action int)
+                      (term (* (struct termios))))
+
+
+;;;; ---------------------------------------------
+
+
 (defconstant *default-memory-size* 300)
 
 ;;;; ----------------------------------------------
@@ -79,6 +107,24 @@
 
 ;;;; ----------------------------------------------
 ;;;; Helpers
+
+(defun read-char-no-echo-cbreak (&optional (stream *query-io*))
+  (with-alien ((old (struct termios))
+               (new (struct termios)))
+    (let ((e0 (unix-tcgetattr 0 old))
+          (e1 (unix-tcgetattr 0 new))
+          (bits (logior tty-icanon tty-echo tty-echoe
+                        tty-echok tty-echonl)))
+      (declare (ignorable e0 e1)) ;[probably should test for error here]
+      (unwind-protect
+           (progn
+             (setf (slot new 'c-lflag) (logandc2 (slot old 'c-lflag) bits))
+             (setf (deref (slot new 'c-cc) vmin) 1)
+             (setf (deref (slot new 'c-cc) vtime) 0)
+             (unix-tcsetattr 0 tcsadrain new)
+             (read-char stream))
+        (unix-tcsetattr 0 tcsadrain old)))))
+
 
 (defun char-to-symbol (c)
   (cond ((eql c #\,) 'comma)
