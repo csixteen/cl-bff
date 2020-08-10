@@ -1,5 +1,4 @@
 .PHONY: bin
-
 bin:
 	@mkdir -p bin
 	@sbcl                                                           \
@@ -7,6 +6,7 @@ bin:
 		--quit                                                  \
 		--disable-debugger
 
+.PHONY: test
 test:
 	@sbcl                           \
 		--noinform              \

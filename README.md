@@ -43,11 +43,28 @@ $ ./bin/cl-bff tests/hello.bf --mem-size 30
 Hello, world!
 ```
 
+# Testing
+You can run the unit tests with `make test` target:
+```
+$ make test
+TEST-SANITIZE: 1 assertions passed, 0 failed.
+
+TEST-IS-VALID-OPERATOR: 2 assertions passed, 0 failed.
+
+Unit Test Summary
+ | 3 assertions total
+ | 3 passed
+ | 0 failed
+ | 0 execution errors
+ | 0 missing tests
+
+$
+```
+
 # TODO
 
 - Implement the "read" operator (`,`).
 - Test with more complex Brainfuck code.
-- Write unit tests.
 
 # LICENSE
 
