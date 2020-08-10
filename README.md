@@ -10,7 +10,7 @@ This has only been tested with [SBCL](http://sbcl.org). Also, you may want to in
 - [ASDF](https://common-lisp.net/project/asdf/)
 
 # Compiling
-In order to compile _cl-bff_ into a single binary, you just need to call `make`:
+In order to compile _cl-bff_ into a single binary, you just need to call `make bin`:
 
 ```
 $ make bin
@@ -31,6 +31,16 @@ done]
 $ ls bin/
 cl-bff
 $
+```
+
+# Running
+After you've compiled the code, you can simply run `bin/cl-bff`:
+
+```
+$ ./bin/cl-bff tests/hello.bf
+Hello, world!
+$ ./bin/cl-bff tests/hello.bf --mem-size 30
+Hello, world!
 ```
 
 # TODO
