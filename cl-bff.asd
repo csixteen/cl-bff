@@ -8,7 +8,7 @@
   :version "0.1.0"
 
   :depends-on (
-    :lisp-unit2
+    :lisp-unit
   )
 
   :components ((:file "package")
@@ -18,4 +18,5 @@
                 :serial t
                 :components ((:file "termios")
                              (:file "argparser")
-                             (:file "brainfuck")))))
+                             (:file "brainfuck")
+                             (:file "brainfuck_test")))))

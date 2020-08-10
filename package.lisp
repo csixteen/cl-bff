@@ -1,6 +1,7 @@
 (defpackage :cl-bff
   (:use :cl
-        #+sbcl :sb-alien)
+        :lisp-unit
+        :sb-alien)
   (:export :execute-program
            :sanitize
            :parse-arguments
