@@ -23,14 +23,7 @@
 ;;;; ----------------------------------------------
 ;;;; Brainfuck Operators
 
-(setf (get '<     'operators) 'op-shl)
-(setf (get '>     'operators) 'op-shr)
-(setf (get '[     'operators) 'op-loop-start)
-(setf (get ']     'operators) 'op-loop-end)
-(setf (get '-     'operators) 'op-decrement)
-(setf (get '+     'operators) 'op-increment)
-(setf (get 'comma 'operators) 'op-read)
-(setf (get 'dot   'operators) 'op-write)
+(defconstant operators '(#\< #\> #\[ #\] #\- #\+ #\, #\.))
 
 
 (defun op-shl (code mem stack cursor pc)
@@ -101,22 +94,25 @@
 ;;;; Helpers
 
 
-(defun char-to-symbol (c)
-  (cond ((equal c #\,) 'comma)
-        ((equal c #\.) 'dot)
-        (t (intern (string c)))))
-
-
 (defun action-op (c)
   "Gets the action for the operator represented by the character
   `c`, should there exist one."
-  (get (char-to-symbol c) 'operators))
+  (case c
+    ((#\<) 'op-shl)
+    ((#\>) 'op-shr)
+    ((#\[) 'op-loop-start)
+    ((#\]) 'op-loop-end)
+    ((#\+) 'op-increment)
+    ((#\-) 'op-decrement)
+    ((#\,) 'op-read)
+    ((#\.) 'op-write)
+    (otherwise "unknown operator")))
 
 
 (defun is-valid-operator (c)
   "Indicates whether char `c` represents a valid Brainfuck operator
   or not."
-  (not (null (action-op (char-to-symbol c)))))
+  (find c operators :test #'char-equal))
 
 
 (defun sanitize (code)
@@ -151,4 +147,3 @@
                    s next-s
                    c next-c
                    p next-p)))))
-
