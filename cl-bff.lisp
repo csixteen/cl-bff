@@ -18,6 +18,10 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
+
+(declaim (optimize (safety 3) (debug 3) (speed 1)))
+
+
 (require :asdf)
 (require :cl-bff)
 
@@ -26,7 +30,13 @@
 
 
 (defun read-code-from-file (filename)
-  filename)
+  "Attempts to read the Brainfuck source code from a file, given
+  a path."
+  (let ((path (uiop:probe-file* filename)))
+    (cond ((null path)
+           (format *error-output* "ERROR: file ~S doesn't exist~%" filename)
+           (sb-ext:quit))
+          (t (uiop:read-file-string filename)))))
 
 
 (defun run-code (code mem-size)
@@ -49,7 +59,7 @@
 (defun main()
   (let* ((params (cl-bff:parse-arguments (cdr sb-ext:*posix-argv*)))
          (filename (get-arg "file-name" params))
-         (mem-size (or (get-arg "mem-size" params) *defaule-memory-size*)))
+         (mem-size (or (get-arg "mem-size" params) *default-memory-size*)))
     (if (null filename)
       (cl-bff:print-help)
       (run-code (read-code-from-file filename) mem-size))))

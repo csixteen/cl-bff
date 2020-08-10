@@ -18,7 +18,7 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
-;(in-package :cl-bff)
+(in-package :cl-bff)
 
 ;;;; ----------------------------------------------
 ;;;; Brainfuck Operators
@@ -102,8 +102,8 @@
 
 
 (defun char-to-symbol (c)
-  (cond ((eql c #\,) 'comma)
-        ((eql c #\.) 'dot)
+  (cond ((equal c #\,) 'comma)
+        ((equal c #\.) 'dot)
         (t (intern (string c)))))
 
 
