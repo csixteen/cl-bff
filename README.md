@@ -1,4 +1,4 @@
-# cl-bff (WORK IN PROGRESS)
+# cl-bff
 
 Yet another Brainfuck interpreter, this time written in Common Lisp.
 
@@ -6,7 +6,7 @@ Yet another Brainfuck interpreter, this time written in Common Lisp.
 
 This has only been tested with [SBCL](http://sbcl.org). Also, you may want to install [Quicklisp](https://www.quicklisp.org/beta/), if you still haven't.
 
-- [lisp-unit2](http://quickdocs.org/lisp-unit2/)
+- [lisp-unit](https://www.cliki.net/lisp-unit)
 - [ASDF](https://common-lisp.net/project/asdf/)
 
 # Compiling
@@ -63,6 +63,8 @@ $
 
 # TODO
 
+- Improve error handling. For example, things will fail miserably if we invoke `cl-bff --mem-size` without a mem size. Should be easy to fix though.
+- Perhaps put the tests in a separate package, so that they don't get added to the binary.
 - Test with more complex Brainfuck code.
 
 # LICENSE

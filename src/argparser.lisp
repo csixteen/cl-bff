@@ -27,7 +27,7 @@
 
 (defun print-help (&key (s *error-output*) (quit t))
   (progn
-    (format s ":: cl-bff (Brainfuck interpreter written in Lisp.")
+    (format s ":: cl-bff (Brainfuck interpreter written in Lisp)")
     (format s "~%~%Usage: cl-bff <FILENAME> [[-h] | [--mem-size <number>]]~%~%")
     (format
       s
