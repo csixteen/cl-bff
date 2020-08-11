@@ -63,6 +63,8 @@ $
 
 # TODO
 
+- Check for `aref` out of range.
+- Implement a sort of `wrapping add` and `wrapping sub`.
 - Improve error handling. For example, things will fail miserably if we invoke `cl-bff --mem-size` without a mem size. Should be easy to fix though.
 - Perhaps put the tests in a separate package, so that they don't get added to the binary.
 - Test with more complex Brainfuck code.
