@@ -1,9 +1,3 @@
-While I was waiting for my girlfriend to get ready to go out I decided
-to learn Brainfuck and write an "Hello world!"
-#useless
-
-Version 1
-
 >+++++++++[<++++++++>-]<.[-]             H
 >++++++++++++[<++++++++>-]<+++++.[-]     e
 >+++++++++++++[<++++++++>-]<++++..[-]    ll
