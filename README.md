@@ -63,7 +63,6 @@ $
 
 # TODO
 
-- Implement the "read" operator (`,`).
 - Test with more complex Brainfuck code.
 
 # LICENSE

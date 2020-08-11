@@ -22,13 +22,13 @@
 
 (define-alien-type nil
   (struct termios
-          (c_iflag unsigned-int)
-          (c_oflag unsigned-int)
-          (c_cflag unsigned-int)
-          (c_lflag unsigned-int)
+          (c_iflag unsigned-long)
+          (c_oflag unsigned-long)
+          (c_cflag unsigned-long)
+          (c_lflag unsigned-long)
           (c_cc (array unsigned-char 20))
-          (c_ispeed int)
-          (c_ospeed int)))
+          (c_ispeed unsigned-long)
+          (c_ospeed unsigned-long)))
 
 (declaim (inline tcgetattr))
 (define-alien-routine "tcgetattr" int
@@ -40,3 +40,19 @@
                       (fd int)
                       (action int)
                       (term (* (struct termios))))
+
+(defun read-single-byte (&optional (s *standard-input*))
+  (with-alien ((old (struct termios))
+               (new (struct termios)))
+    (let ((e0 (tcgetattr 0 (addr old)))
+          (e1 (tcgetattr 0 (addr new)))
+          (n-lflag (slot new 'c_lflag)))
+      (declare (ignorable e0 e1))                 ; eventually test for errors
+      (unwind-protect
+        (progn
+          (setf (ldb (byte 1 8) n-lflag) 0)       ; disables canonical mode (ICANON)
+          (setf (ldb (byte 1 3) n-lflag) 0)       ; disables echoing input char (ECHO)
+          (setf (slot new 'c_lflag) n-lflag)
+          (tcsetattr 0 0 (addr new))
+          (read-byte s))
+        (tcsetattr 0 0 (addr old))))))

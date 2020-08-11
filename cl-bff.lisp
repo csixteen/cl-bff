@@ -19,7 +19,7 @@
 ; SOFTWARE.
 
 
-(declaim (optimize (safety 3) (debug 3) (speed 1)))
+(declaim (optimize (safety 1) (debug 3) (speed 1)))
 
 
 (require :asdf)

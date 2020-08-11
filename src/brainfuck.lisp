@@ -79,7 +79,10 @@
     (values mem stack cursor (1+ pc))))
 
 
-(defun op-read () 'READ)
+(defun op-read (code mem stack cursor pc)
+  (progn
+    (setf (aref mem cursor) (read-single-byte))
+    (values mem stack cursor (1+ pc))))
 
 
 (defun op-write (code mem stack cursor pc)
