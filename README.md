@@ -1,6 +1,6 @@
 # cl-bff
 
-Yet another Brainfuck interpreter, this time written in Common Lisp. Use with caution, still has some bugs.
+Yet another Brainfuck interpreter, this time written in Common Lisp. Use with caution, still has some bugs. This is an ongoing exercise for me to learn Lisp.
 
 # Dependencies
 
