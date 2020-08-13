@@ -65,7 +65,7 @@ $
 ```
 
 # Running unit tests
-You can run the unit tests with `make test` target:
+You can run the unit tests with `make unit` target:
 ```
 $ make unit
 TEST-SANITIZE: 1 assertions passed, 0 failed.
