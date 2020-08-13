@@ -1,6 +1,6 @@
 # cl-bff
 
-Yet another Brainfuck interpreter, this time written in Common Lisp. Use with caution, still has some bugs. This is an ongoing exercise for me to learn Lisp.
+Yet another Brainfuck interpreter, this time written in Common Lisp. Use with caution, this is an ongoing exercise for me to learn Lisp. It successfully prints the correct output of all the Brainfuck code in `tests/` (includig 99 Bottles of beer), which makes me very happy!
 
 # Dependencies
 
@@ -63,11 +63,8 @@ $
 
 # TODO
 
-- Check for `aref` out of range.
-- Implement a sort of `wrapping add` and `wrapping sub`.
 - Improve error handling. For example, things will fail miserably if we invoke `cl-bff --mem-size` without a mem size. Should be easy to fix though.
 - Perhaps put the tests in a separate package, so that they don't get added to the binary.
-- Test with more complex Brainfuck code.
 
 # LICENSE
 

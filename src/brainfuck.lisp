@@ -20,6 +20,19 @@
 
 (in-package :cl-bff)
 
+
+(defun >1- (value &optional (max-val most-positive-fixnum))
+  (if (zerop value)
+    max-val
+    (1- value)))
+
+
+(defun <1+ (value &optional (max-val most-positive-fixnum))
+  (if (= value max-val)
+    0
+    (1+ value)))
+
+
 ;;;; ----------------------------------------------
 ;;;; Brainfuck Operators
 
@@ -28,12 +41,12 @@
 
 (defun op-shl (code mem stack cursor pc)
   "Shifts the memory cursor one position to the left."
-  (values mem stack (1- cursor) (1+ pc)))
+  (values mem stack (max 0 (>1- cursor)) (1+ pc)))
 
 
 (defun op-shr (code mem stack cursor pc)
   "Shifts the memory cursor one position to the right."
-  (values mem stack (1+ cursor) (1+ pc)))
+  (values mem stack (<1+ cursor) (1+ pc)))
 
 
 (defun op-loop-start (code mem stack cursor pc)
@@ -42,7 +55,7 @@
   it advances the program counter to the matching `]`."
   (cond ((> (aref mem cursor) 0)
          (values mem (cons pc stack) cursor (1+ pc)))
-        (t (let ((i (1+ pc))
+        (t (let ((i (<1+ pc))
                  (skipped 0))
              (loop (when (>= i (length code))
                      (return (values mem stack cursor i)))
@@ -68,20 +81,23 @@
 (defun op-decrement (code mem stack cursor pc)
   "Decrements the value of the current memory cell by 1."
   (progn
-    (setf (aref mem cursor) (1- (aref mem cursor)))
+    (when (< cursor (length mem))
+      (setf (aref mem cursor) (>1- (aref mem cursor) 255)))
     (values mem stack cursor (1+ pc))))
 
 
 (defun op-increment (code mem stack cursor pc)
   "Increments the value of the current memory cell by 1."
   (progn
-    (setf (aref mem cursor) (1+ (aref mem cursor)))
+    (when (< cursor (length mem))
+      (setf (aref mem cursor) (<1+ (aref mem cursor) 255)))
     (values mem stack cursor (1+ pc))))
 
 
 (defun op-read (code mem stack cursor pc)
   (progn
-    (setf (aref mem cursor) (read-single-byte))
+    (when (< cursor (length mem))
+      (setf (aref mem cursor) (read-single-byte)))
     (values mem stack cursor (1+ pc))))
 
 
@@ -89,7 +105,8 @@
   "Writes to STDOUT the ASCII character corresponding to the 
   integer in the current memory cell."
   (progn
-    (format t "~A" (code-char (aref mem cursor)))
+    (when (< cursor (length mem))
+      (format t "~A" (code-char (aref mem cursor))))
     (values mem stack cursor (1+ pc))))
 
 
