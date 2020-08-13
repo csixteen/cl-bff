@@ -6,10 +6,19 @@ bin:
 		--quit                                                  \
 		--disable-debugger
 
-.PHONY: test
-test:
+.PHONY: unit
+unit:
 	@sbcl                           \
 		--noinform              \
 		--load test-runner.lisp \
 		--quit                  \
 		--disable-debugger
+
+.PHONY: test
+
+FILES := $(shell find ./tests/ -name "*.bf" -exec basename -s .bf {} \;)
+JOBS := $(addprefix job,${FILES})
+
+test: bin ${JOBS} ; @echo "[$@] finished!"
+
+${JOBS}: job%: ; ./bin/cl-bff tests/$*.bf

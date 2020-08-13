@@ -44,9 +44,30 @@ Hello, world!
 ```
 
 # Testing
-You can run the unit tests with `make test` target:
+You can test the code against all the Brainfuck source files in `tests/` by running the following `make` target:
+
 ```
 $ make test
+-- snip --
+1 Bottle of beer on the wall
+1 Bottle of beer
+Take one down and pass it around
+0 Bottles of beer on the wall
+
+./bin/cl-bff tests/hello.bf
+Hello, world!
+./bin/cl-bff tests/hello4.bf
+Hello World!
+./bin/cl-bff tests/hello5.bf
+Hello World!
+[test] finished!
+$
+```
+
+# Running unit tests
+You can run the unit tests with `make test` target:
+```
+$ make unit
 TEST-SANITIZE: 1 assertions passed, 0 failed.
 
 TEST-IS-VALID-OPERATOR: 2 assertions passed, 0 failed.
@@ -60,6 +81,8 @@ Unit Test Summary
 
 $
 ```
+
+Still need to add more, though.
 
 # TODO
 
