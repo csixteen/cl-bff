@@ -1,6 +1,6 @@
 # cl-bff
 
-Yet another Brainfuck interpreter, this time written in Common Lisp. Use with caution, this is an ongoing exercise for me to learn Lisp. It successfully prints the correct output of all the Brainfuck code in `tests/` (includig 99 Bottles of beer), which makes me very happy!
+Yet another Brainfuck interpreter, this time written in Common Lisp. Use with caution, this is an ongoing exercise for me to learn Lisp. It successfully interprets all the Brainfuck code in `tests/` (includig 99 Bottles of beer), which makes me very happy!
 
 # Dependencies
 
