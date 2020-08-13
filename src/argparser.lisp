@@ -26,17 +26,16 @@
 
 
 (defun print-help (&key (s *error-output*) (quit t))
-  (progn
-    (format s ":: cl-bff (Brainfuck interpreter written in Lisp)")
-    (format s "~%~%Usage: cl-bff <FILENAME> [[-h] | [--mem-size <number>]]~%~%")
-    (format
-      s
-      "Options:
+  (format s ":: cl-bff (Brainfuck interpreter written in Lisp)")
+  (format s "~%~%Usage: cl-bff <FILENAME> [[-h] | [--mem-size <number>]]~%~%")
+  (format
+    s
+    "Options:
 
 -h                   Prints this help menu
 --mem-size <number>  The number of memory cells available during runtime.~%")
-    (when quit
-      (sb-ext:quit))))
+  (when quit
+    (sb-ext:quit)))
 
 
 (defun read-numeric-argument (arg)

@@ -80,34 +80,30 @@
 
 (defun op-decrement (code mem stack cursor pc)
   "Decrements the value of the current memory cell by 1."
-  (progn
-    (when (< cursor (length mem))
-      (setf (aref mem cursor) (>1- (aref mem cursor) 255)))
-    (values mem stack cursor (1+ pc))))
+  (when (< cursor (length mem))
+    (setf (aref mem cursor) (>1- (aref mem cursor) 255)))
+  (values mem stack cursor (1+ pc)))
 
 
 (defun op-increment (code mem stack cursor pc)
   "Increments the value of the current memory cell by 1."
-  (progn
-    (when (< cursor (length mem))
-      (setf (aref mem cursor) (<1+ (aref mem cursor) 255)))
-    (values mem stack cursor (1+ pc))))
+  (when (< cursor (length mem))
+    (setf (aref mem cursor) (<1+ (aref mem cursor) 255)))
+  (values mem stack cursor (1+ pc)))
 
 
 (defun op-read (code mem stack cursor pc)
-  (progn
-    (when (< cursor (length mem))
-      (setf (aref mem cursor) (read-single-byte)))
-    (values mem stack cursor (1+ pc))))
+  (when (< cursor (length mem))
+    (setf (aref mem cursor) (read-single-byte)))
+  (values mem stack cursor (1+ pc)))
 
 
 (defun op-write (code mem stack cursor pc)
   "Writes to STDOUT the ASCII character corresponding to the 
   integer in the current memory cell."
-  (progn
-    (when (< cursor (length mem))
-      (format t "~A" (code-char (aref mem cursor))))
-    (values mem stack cursor (1+ pc))))
+  (when (< cursor (length mem))
+    (format t "~A" (code-char (aref mem cursor))))
+  (values mem stack cursor (1+ pc)))
 
 
 ;;;; ----------------------------------------------
