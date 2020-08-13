@@ -41,7 +41,7 @@
 
 (defun op-shl (code mem stack cursor pc)
   "Shifts the memory cursor one position to the left."
-  (values mem stack (max 0 (>1- cursor)) (1+ pc)))
+  (values mem stack (>1- cursor) (1+ pc)))
 
 
 (defun op-shr (code mem stack cursor pc)
