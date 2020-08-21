@@ -18,7 +18,10 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
-(in-package :cl-bff)
+(in-package :cl-bff.brainfuck)
+
+
+(defconstant +brainfuck-operators+ '(#\< #\> #\[ #\] #\- #\+ #\, #\.))
 
 
 (defun >1- (value &optional (max-val most-positive-fixnum))
@@ -31,12 +34,6 @@
   (if (= value max-val)
     0
     (1+ value)))
-
-
-;;;; ----------------------------------------------
-;;;; Brainfuck Operators
-
-(defconstant operators '(#\< #\> #\[ #\] #\- #\+ #\, #\.))
 
 
 (defun op-shl (code mem stack cursor pc)
@@ -128,7 +125,7 @@
 (defun is-valid-operator (c)
   "Indicates whether char `c` represents a valid Brainfuck operator
   or not."
-  (find c operators :test #'char-equal))
+  (find c +brainfuck-operators+ :test #'char-equal))
 
 
 (defun sanitize (code)

@@ -22,13 +22,23 @@
                (:file "argparser")))
 
 
-(asdf:defsystem :cl-bff
-  :description "Brainfuck interpreter"
+(asdf:defsystem :cl-bff/brainfuck
+  :description "Utilities to parse and execute Brainfuck code"
   :author "Pedro Rodrigues <csixteen@protonmail.com>"
   :license "MIT"
   :version "0.1.0"
-  :depends-on (:uiop :cl-bff/argparser :cl-bff/termios)
-  :pathname "src/"
+  :depends-on (:uiop :cl-bff/args :cl-bff/termios)
+  :pathname "src/brainfuck/"
   :serial t
   :components ((:file "packages")
                (:file "brainfuck")))
+
+
+(asdf:defsystem :cl-bff
+  :description "Brainfuck interpreter."
+  :author "Pedro Rodrigues <csixteen@protonmail.com>"
+  :license "MIT"
+  :version "0.1.0"
+  :depends-on (:uiop cl-bff/args :cl-bff/brainfuck)
+  :serial t
+  :components ((:file "cl-bff")))

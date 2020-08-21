@@ -18,16 +18,24 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
+(require :asdf)
+(asdf:load-system "cl-bff/args")
+(asdf:load-system "cl-bff/brainfuck")
+
+
+(uiop:define-package :cl-bff
+  (:use #:cl
+        #:cl-bff.args
+        #:cl-bff.brainfuck))
+
+
+(in-package :cl-bff)
+
 
 (declaim (optimize (safety 3) (debug 1) (speed 2)))
 
 
-(require :asdf)
-(require :cl-bff)
-(require :cl-bff.args)
-
-
-(defconstant *default-memory-size* 300)
+(defconstant +default-memory-size+ 300)
 
 
 (defun read-code-from-file (filename)
@@ -43,9 +51,9 @@
 (defun run-code (code mem-size)
   "Takes a sequence that represents potential Brainfuck code and
   runs it."
-  (let* ((sane-code (cl-bff:sanitize code))
+  (let* ((sane-code (cl-bff.brainfuck:sanitize code))
          (len (length sane-code)))
-    (cl-bff:execute-program
+    (cl-bff.brainfuck:execute-program
       (make-array len :initial-contents sane-code)
       (make-array mem-size :initial-element 0)
       nil
@@ -60,7 +68,7 @@
 (defun main()
   (let* ((params (cl-bff.args:parse-arguments (cdr sb-ext:*posix-argv*)))
          (filename (get-arg "file-name" params))
-         (mem-size (or (get-arg "mem-size" params) *default-memory-size*)))
+         (mem-size (or (get-arg "mem-size" params) +default-memory-size+)))
     (if (null filename)
       (cl-bff.args:print-help)
       (run-code (read-code-from-file filename) mem-size))))
@@ -69,7 +77,7 @@
 ;;;; ------------------------------------------------
 
 
-(save-lisp-and-die
+(sb-ext:save-lisp-and-die
   "bin/cl-bff"
   :purify t
   :executable t
