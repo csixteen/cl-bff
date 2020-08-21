@@ -37,9 +37,9 @@ $
 After you've compiled the code, you can simply run `bin/cl-bff`:
 
 ```
-$ ./bin/cl-bff tests/hello.bf
+$ ./bin/cl-bff t/examples/hello.bf
 Hello, world!
-$ ./bin/cl-bff tests/hello.bf --mem-size 30
+$ ./bin/cl-bff t/examples/hello.bf --mem-size 30
 Hello, world!
 ```
 
@@ -54,11 +54,11 @@ $ make test
 Take one down and pass it around
 0 Bottles of beer on the wall
 
-./bin/cl-bff tests/hello.bf
+./bin/cl-bff t/examples/hello.bf
 Hello, world!
-./bin/cl-bff tests/hello4.bf
+./bin/cl-bff t/examples/hello4.bf
 Hello World!
-./bin/cl-bff tests/hello5.bf
+./bin/cl-bff t/examples/hello5.bf
 Hello World!
 [test] finished!
 $
@@ -87,7 +87,6 @@ Still need to add more, though.
 # TODO
 
 - Improve error handling. For example, things will fail miserably if we invoke `cl-bff --mem-size` without a mem size. Should be easy to fix though.
-- Perhaps put the tests in a separate package, so that they don't get added to the binary.
 
 # LICENSE
 

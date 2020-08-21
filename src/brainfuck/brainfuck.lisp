@@ -21,7 +21,7 @@
 (in-package :cl-bff.brainfuck)
 
 
-(defconstant +brainfuck-operators+ '(#\< #\> #\[ #\] #\- #\+ #\, #\.))
+(defparameter +brainfuck-operators+ '(#\< #\> #\[ #\] #\- #\+ #\, #\.))
 
 
 (defun >1- (value &optional (max-val most-positive-fixnum))

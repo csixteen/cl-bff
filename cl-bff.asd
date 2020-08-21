@@ -42,3 +42,14 @@
   :depends-on (:uiop cl-bff/args :cl-bff/brainfuck)
   :serial t
   :components ((:file "cl-bff")))
+
+(asdf:defsystem :cl-bff/tests
+  :description "Unit tests"
+  :author "Pedro Rodrigues <csixteen@protonmail.com>"
+  :license "MIT"
+  :version "0.1.0"
+  :depends-on (:lisp-unit :cl-bff/args :cl-bff/brainfuck)
+  :pathname "t/"
+  :serial t
+  :components ((:file "packages")
+               (:file "brainfuck_test")))

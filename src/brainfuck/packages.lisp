@@ -2,5 +2,7 @@
   (:use :cl
         :cl-bff.args
         :cl-bff.termios)
-  (:export :execute-program
+  (:export :sanitize
+           :is-valid-operator
+           :execute-program
            :sanitize))

@@ -18,13 +18,13 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
-(load "cl-bff.asd")
+(require :asdf)
+(asdf:load-system "cl-bff/tests")
 
-(require :cl-bff)
 
 (setq lisp-unit:*print-failures* t)
 (setq lisp-unit:*print-errors* t)
 
 
 #-xlisp-test
-(lisp-unit:run-tests :all :cl-bff)
+(lisp-unit:run-tests :all :cl-bff.tests)
