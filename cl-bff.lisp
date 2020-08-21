@@ -24,6 +24,7 @@
 
 (require :asdf)
 (require :cl-bff)
+(require :cl-bff.args)
 
 
 (defconstant *default-memory-size* 300)
@@ -57,11 +58,11 @@
 
 
 (defun main()
-  (let* ((params (cl-bff:parse-arguments (cdr sb-ext:*posix-argv*)))
+  (let* ((params (cl-bff.args:parse-arguments (cdr sb-ext:*posix-argv*)))
          (filename (get-arg "file-name" params))
          (mem-size (or (get-arg "mem-size" params) *default-memory-size*)))
     (if (null filename)
-      (cl-bff:print-help)
+      (cl-bff.args:print-help)
       (run-code (read-code-from-file filename) mem-size))))
 
 

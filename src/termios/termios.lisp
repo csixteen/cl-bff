@@ -18,7 +18,8 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
-(in-package :cl-bff)
+(in-package :cl-bff.termios)
+
 
 (define-alien-type nil
   (struct termios
@@ -30,16 +31,19 @@
           (c_ispeed unsigned-long)
           (c_ospeed unsigned-long)))
 
+
 (declaim (inline tcgetattr))
 (define-alien-routine "tcgetattr" int
                       (fd int)
                       (term (* (struct termios))))
+
 
 (declaim (inline tcsetattr))
 (define-alien-routine "tcsetattr" int
                       (fd int)
                       (action int)
                       (term (* (struct termios))))
+
 
 (defun read-single-byte (&optional (s *standard-input*))
   (with-alien ((old (struct termios))
