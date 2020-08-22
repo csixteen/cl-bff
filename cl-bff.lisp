@@ -18,10 +18,6 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
-(require :asdf)
-(asdf:load-system "cl-bff/args")
-(asdf:load-system "cl-bff/brainfuck")
-
 
 (uiop:define-package :cl-bff
   (:use #:cl
@@ -30,9 +26,6 @@
 
 
 (in-package :cl-bff)
-
-
-(declaim (optimize (safety 3) (debug 1) (speed 2)))
 
 
 (defconstant +default-memory-size+ 300)

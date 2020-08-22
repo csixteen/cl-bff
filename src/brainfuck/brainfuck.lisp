@@ -38,11 +38,13 @@
 
 (defun op-shl (code mem stack cursor pc)
   "Shifts the memory cursor one position to the left."
+  (declare (ignorable code))
   (values mem stack (>1- cursor) (1+ pc)))
 
 
 (defun op-shr (code mem stack cursor pc)
   "Shifts the memory cursor one position to the right."
+  (declare (ignorable code))
   (values mem stack (<1+ cursor) (1+ pc)))
 
 
@@ -69,6 +71,7 @@
   "Advances the program counter to the next instruction if
   the value of the current memory cell is zero. If not, it
   moves the program counter back to the matching `[`."
+  (declare (ignorable code))
   (cond ((zerop (aref mem cursor))
          (values mem (cdr stack) cursor (1+ pc)))
         (t (let ((offset (1+ (- (car stack) pc))))
@@ -77,6 +80,7 @@
 
 (defun op-decrement (code mem stack cursor pc)
   "Decrements the value of the current memory cell by 1."
+  (declare (ignorable code))
   (when (< cursor (length mem))
     (setf (aref mem cursor) (>1- (aref mem cursor) 255)))
   (values mem stack cursor (1+ pc)))
@@ -84,12 +88,14 @@
 
 (defun op-increment (code mem stack cursor pc)
   "Increments the value of the current memory cell by 1."
+  (declare (ignorable code))
   (when (< cursor (length mem))
     (setf (aref mem cursor) (<1+ (aref mem cursor) 255)))
   (values mem stack cursor (1+ pc)))
 
 
 (defun op-read (code mem stack cursor pc)
+  (declare (ignorable code))
   (when (< cursor (length mem))
     (setf (aref mem cursor) (read-single-byte)))
   (values mem stack cursor (1+ pc)))
@@ -98,6 +104,7 @@
 (defun op-write (code mem stack cursor pc)
   "Writes to STDOUT the ASCII character corresponding to the 
   integer in the current memory cell."
+  (declare (ignorable code))
   (when (< cursor (length mem))
     (format t "~A" (code-char (aref mem cursor))))
   (values mem stack cursor (1+ pc)))

@@ -1,9 +1,9 @@
 .PHONY: bin
 bin:
 	@mkdir -p bin
-	@sbcl                                                           \
-		--eval '(and (load "cl-bff.asd") (load "cl-bff.lisp"))' \
-		--quit                                                  \
+	@sbcl                                                                  \
+		--eval '(and (load "cl-bff.asd") (asdf:load-system "cl-bff"))' \
+		--quit                                                         \
 		--disable-debugger
 
 .PHONY: unit

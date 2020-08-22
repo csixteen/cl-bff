@@ -86,7 +86,7 @@ Still need to add more, though.
 
 # TODO
 
-- Improve error handling. For example, things will fail miserably if we invoke `cl-bff --mem-size` without a mem size. Should be easy to fix though.
+- Increate code coverage.
 
 # LICENSE
 
