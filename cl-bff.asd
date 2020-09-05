@@ -39,7 +39,7 @@
   :author "Pedro Rodrigues <csixteen@protonmail.com>"
   :license "MIT"
   :version "0.1.0"
-  :depends-on (:uiop cl-bff/args :cl-bff/brainfuck)
+  :depends-on (:uiop :cl-bff/args :cl-bff/brainfuck)
   :serial t
   :components ((:file "cl-bff")))
 
