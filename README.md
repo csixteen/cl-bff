@@ -84,10 +84,6 @@ $
 
 Still need to add more, though.
 
-# TODO
-
-- Increate code coverage.
-
 # Contributing
 
 If you find any bug or want to improve the code, feel free to open a PR!
