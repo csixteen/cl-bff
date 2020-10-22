@@ -6,7 +6,7 @@
   :depends-on (:uiop)
   :pathname "src/termios/"
   :serial t
-  :components ((:file "packages")
+  :components ((:file "package")
                (:file "termios")))
 
 
@@ -18,7 +18,7 @@
   :depends-on (:uiop)
   :pathname "src/argparser/"
   :serial t
-  :components ((:file "packages")
+  :components ((:file "package")
                (:file "argparser")))
 
 
@@ -30,7 +30,7 @@
   :depends-on (:uiop :cl-bff/args :cl-bff/termios)
   :pathname "src/brainfuck/"
   :serial t
-  :components ((:file "packages")
+  :components ((:file "package")
                (:file "brainfuck")))
 
 
@@ -51,5 +51,5 @@
   :depends-on (:lisp-unit :cl-bff/args :cl-bff/brainfuck)
   :pathname "t/"
   :serial t
-  :components ((:file "packages")
+  :components ((:file "package")
                (:file "brainfuck_test")))

@@ -20,13 +20,6 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
-(require :asdf)
-(asdf:load-system "cl-bff/tests")
-
-
-(setq lisp-unit:*print-failures* t)
-(setq lisp-unit:*print-errors* t)
-
-
-#-xlisp-test
-(lisp-unit:run-tests :all :cl-bff.tests)
+(uiop:define-package :cl-bff.termios
+  (:use :cl :sb-alien)
+  (:export :read-single-byte))

@@ -20,13 +20,8 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
-(require :asdf)
-(asdf:load-system "cl-bff/tests")
+(uiop:define-package :cl-bff.tests
+  (:use #:cl
+        #:lisp-unit
+        #:cl-bff.brainfuck))
 
-
-(setq lisp-unit:*print-failures* t)
-(setq lisp-unit:*print-errors* t)
-
-
-#-xlisp-test
-(lisp-unit:run-tests :all :cl-bff.tests)
